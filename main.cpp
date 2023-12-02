@@ -1,181 +1,213 @@
-#include<iostream>
-#include<vector>
-#include<string>
-#include<sstream>
-#include<fstream>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <fstream>
 using namespace std;
 
 class Product
 {
-    private:
-        int id;
-        string name;
-        string category;
-        double price;
-        int quantity;
-    
-    public:
-        Product(int id, string name, string category, double price, int quantity)
-        {
-            this->id=id;
-            this->name=name;
-            this->category=category;
-            this->price=price;
-            this->quantity=quantity;
-        }
+private:
+    int id;
+    string name;
+    string category;
+    double price;
+    int quantity;
 
-        int getId() const{
-            return id;
-        }
+public:
+    Product(int id, string name, string category, double price, int quantity)
+    {
+        this->id = id;
+        this->name = name;
+        this->category = category;
+        this->price = price;
+        this->quantity = quantity;
+    }
 
-        void setId(int id){
-            this->id=id;
-        }
+    int getId() const
+    {
+        return id;
+    }
 
-        string getName() const{
-            return name;
-        }
+    void setId(int id)
+    {
+        this->id = id;
+    }
 
-        void setName(string name){
-            this->name=name;
-        }
+    string getName() const
+    {
+        return name;
+    }
 
-        string getCategory() const{
-            return category;
-        }
+    void setName(string name)
+    {
+        this->name = name;
+    }
 
-        void setCategory(string category){
-            this->category=category;
-        }
+    string getCategory() const
+    {
+        return category;
+    }
 
-        double getPrice() const{
-            return price;
-        }
+    void setCategory(string category)
+    {
+        this->category = category;
+    }
 
-        void setPrice(double price){
-            this->price=price;
-        }
+    double getPrice() const
+    {
+        return price;
+    }
 
-        int getQuantity() const{
-            return quantity;
-        }
+    void setPrice(double price)
+    {
+        this->price = price;
+    }
 
-        void setQuantity(int quantity){
-            this->quantity=quantity;
-        }
+    int getQuantity() const
+    {
+        return quantity;
+    }
+
+    void setQuantity(int quantity)
+    {
+        this->quantity = quantity;
+    }
 };
 
 class Inventory
 {
-    private:
-        vector<Product> products;
-    
-    public:
-        void addProduct(Product product)
-        {
-            bool found = false;
-            for (auto& p : products)
-            {
-                if (p.getId() == product.getId())
-                {
-                    cout << "Id already Exist."<< endl;
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                products.push_back(product);
-                cout << "Product added successfully." << endl;
-                cout << "-----------------------------------------------------------" <<endl;
-            }
-        }            
+private:
+    vector<Product> products;
 
-        void removeProduct(int id)
+public:
+    void addProduct(Product product)
+    {
+        bool found = false;
+        for (auto &p : products)
         {
-            bool found = false;
-            for (auto i = products.begin(); i != products.end(); i++)
+            if (p.getId() == product.getId())
             {
-                if (i->getId() == id)
-                {
-                    products.erase(i);
-                    found = true;
-                    cout << "Product removed successfully." << endl;        
-                    cout << "-----------------------------------------------------------" <<endl;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                cout << "Id does not exist" << endl;
+                cout << "Id already Exist." << endl;
+                found = true;
+                break;
             }
         }
-
-        Product* findProduct(int id)
+        if (!found)
         {
-            for(auto i=products.begin();i!=products.end();i++)
-            {
-                if(i->getId()==id)
-                {
-                    return &(*i);
-                }
-            }
-            return nullptr;
+            products.push_back(product);
+            cout << "Product added successfully." << endl;
+            cout << "-----------------------------------------------------------" << endl;
         }
+    }
 
-        void updateProduct(int id, string name, string category, double price, int quantity)
+    void removeProduct(int id)
+    {
+        bool found = false;
+        for (auto i = products.begin(); i != products.end(); i++)
         {
-            bool found = false;
-            for (auto i = products.begin(); i != products.end(); i++)
+            if (i->getId() == id)
             {
-                if (i->getId() == id)
-                {
-                    i->setName(name);
-                    i->setCategory(category);
-                    i->setPrice(price);
-                    i->setQuantity(quantity);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                cout << "ID does not exist." << endl;
-            }
-        }        
-
-        void printProduct() const{
-            for(auto i=products.begin();i!=products.end();i++)
-            {
-                cout<<"ID : "<<i->getId()<<endl;
-                cout<<"Name : "<<i->getName()<<endl;
-                cout<<"Category : "<<i->getCategory()<<endl;
-                cout<<"Price : $"<<i->getPrice()<<endl;
-                cout<<"Quantity : "<<i->getQuantity()<<endl;
+                products.erase(i);
+                found = true;
+                cout << "Product removed successfully." << endl;
+                cout << "-----------------------------------------------------------" << endl;
+                break;
             }
         }
-
-        void saveInventoryToFile(string filename) 
+        if (!found)
         {
-            ofstream file;
-            file.open(filename, ios::out | ios::app);
-            for (int i = 0; i < products.size(); i++) 
-            {
-                Product p = products[i];
-                file << p.getId() << "," << p.getName() << "," << p.getCategory() << "," << p.getPrice() << "," << p.getQuantity() << endl;
-            }
-            file.close();
+            cout << "Id does not exist" << endl;
         }
+    }
 
-    void loadInventoryFromFile(string filename) 
+    Product *findProduct(int id)
+    {
+        for (auto i = products.begin(); i != products.end(); i++)
+        {
+            if (i->getId() == id)
+            {
+                return &(*i);
+            }
+        }
+        return nullptr;
+    }
+
+    void updateProduct(int id, string name, string category, double price, int quantity)
+    {
+        bool found = false;
+        for (auto i = products.begin(); i != products.end(); i++)
+        {
+            if (i->getId() == id)
+            {
+                i->setName(name);
+                i->setCategory(category);
+                i->setPrice(price);
+                i->setQuantity(quantity);
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            cout << "ID does not exist." << endl;
+        }
+    }
+
+    void printProduct() const
+    {
+        for (auto i = products.begin(); i != products.end(); i++)
+        {
+            cout << "ID : " << i->getId() << endl;
+            cout << "Name : " << i->getName() << endl;
+            cout << "Category : " << i->getCategory() << endl;
+            cout << "Price : $" << i->getPrice() << endl;
+            cout << "Quantity : " << i->getQuantity() << endl;
+        }
+    }
+
+    void saveInventoryToFile(string filename)
+    {
+        ofstream file;
+        file.open(filename, ios::out | ios::app);
+        for (int i = 0; i < products.size(); i++)
+        {
+            Product p = products[i];
+            file << p.getId() << "," << p.getName() << "," << p.getCategory() << "," << p.getPrice() << "," << p.getQuantity() << endl;
+        }
+        file.close();
+    }
+
+    // Bubble Sort algorithm to sort products by ID
+    void sortProductsByID()
+    {
+        int n = products.size();
+        for (int i = 1; i < n; i++)
+        {
+            Product key = products[i];
+            int j = i - 1;
+
+            // Use insertion sort until the correct position for the key is found
+            while (j >= 0 && products[j].getId() > key.getId())
+            {
+                products[j + 1] = products[j];
+                j = j - 1;
+            }
+            products[j + 1] = key;
+        }
+        cout << "Products sorted by ID." << endl;
+        cout << "-----------------------------------------------------------" << endl;
+    }
+
+    void loadInventoryFromFile(string filename)
     {
         ifstream file;
         file.open(filename);
 
-        if (file.is_open()) 
+        if (file.is_open())
         {
             string line;
-            while (getline(file, line)) 
+            while (getline(file, line))
             {
                 stringstream ss(line);
                 string idStr, name, category, priceStr, quantityStr;
@@ -194,21 +226,25 @@ class Inventory
             }
 
             file.close();
-        } else {
+        }
+        else
+        {
             cout << "Error: Could not open file " << filename << endl;
         }
     }
 };
 
-int main() {
+int main()
+{
     Inventory inventory;
-    cout << "-----------------------------------------------------------" <<endl;
-    cout << "---------------Inventory Management System ----------------" <<endl;   
-    cout << "-----------------------------------------------------------" <<endl;
-    cout << "------------------------- Welcome! ------------------------" <<endl;
-    cout << "-----------------------------------------------------------" <<endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "---------------Inventory Management System ----------------" << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "------------------------- Welcome! ------------------------" << endl;
+    cout << "-----------------------------------------------------------" << endl;
     char choice;
-    do {
+    do
+    {
         cout << "Please choose an option:" << endl;
         cout << "1. Add a product" << endl;
         cout << "2. Remove a product" << endl;
@@ -217,11 +253,14 @@ int main() {
         cout << "5. View all products" << endl;
         cout << "6. Save inventory to file" << endl;
         cout << "7. Load Inventory from file" << endl;
+        cout << "8. Sort the Product by ID" << endl;
         cout << "Q. Quit" << endl;
         cin >> choice;
 
-        switch (choice) {
-        case '1': {
+        switch (choice)
+        {
+        case '1':
+        {
             int id;
             string name, category;
             double price;
@@ -241,7 +280,8 @@ int main() {
             break;
         }
 
-        case '2': {
+        case '2':
+        {
             int id;
             cout << "Enter product id: ";
             cin >> id;
@@ -249,26 +289,30 @@ int main() {
             break;
         }
 
-        case '3': {
+        case '3':
+        {
             int id;
             cout << "Enter product id: ";
             cin >> id;
-            Product* product = inventory.findProduct(id);
-            if (product) {
+            Product *product = inventory.findProduct(id);
+            if (product)
+            {
                 cout << "Name: " << product->getName() << endl;
                 cout << "Category: " << product->getCategory() << endl;
                 cout << "Price: $ " << product->getPrice() << endl;
                 cout << "Quantity: " << product->getQuantity() << endl;
-                cout << "-----------------------------------------------------------" <<endl;
+                cout << "-----------------------------------------------------------" << endl;
             }
-            else {
+            else
+            {
                 cout << "Product not found." << endl;
-                cout << "-----------------------------------------------------------" <<endl;
+                cout << "-----------------------------------------------------------" << endl;
             }
             break;
         }
 
-        case '4': {
+        case '4':
+        {
             int id;
             string name, category;
             double price;
@@ -285,35 +329,45 @@ int main() {
             cin >> quantity;
             inventory.updateProduct(id, name, category, price, quantity);
             cout << "Product updated successfully." << endl;
-            cout << "-----------------------------------------------------------" <<endl;
+            cout << "-----------------------------------------------------------" << endl;
             break;
         }
 
-        case '5': {
+        case '5':
+        {
             inventory.printProduct();
             break;
         }
-        case '6': {
-            inventory.saveInventoryToFile("inventory.csv");
+        case '6':
+        {
+            inventory.saveInventoryToFile("inventory1.csv");
             cout << "Inventory saved to file." << endl;
-            cout << "-----------------------------------------------------------" <<endl;
+            cout << "-----------------------------------------------------------" << endl;
             break;
         }
-        case '7': {
-            inventory.loadInventoryFromFile("inventory.csv");
+        case '7':
+        {
+            inventory.loadInventoryFromFile("inventory1.csv");
             cout << "Inventory loaded from file." << endl;
-            cout << "-----------------------------------------------------------" <<endl;
+            cout << "-----------------------------------------------------------" << endl;
+            break;
+        }
+        case '8':
+        {
+            inventory.sortProductsByID();
+            cout << "Products sorted by ID." << endl;
+            cout << "-----------------------------------------------------------" << endl;
             break;
         }
         case 'q':
         case 'Q':
             cout << "Goodbye!" << endl;
-            cout << "-----------------------------------------------------------" <<endl;
+            cout << "-----------------------------------------------------------" << endl;
             return 0;
-        
+
         default:
             cout << "Invalid Choice. Please Try again" << endl;
-            cout << "-----------------------------------------------------------" <<endl;
+            cout << "-----------------------------------------------------------" << endl;
             break;
         }
     } while (true);
