@@ -39,6 +39,10 @@ This program is an Inventory Management System built in C++ that allows users to
 
 - C++ compiler (supporting C++11)
 
+## CLI Interface
+
+- ![Alt text](./snapshot/image.png)
+
 ## Contributors
 
 - [AshishKukreti2003](https://github.com/AshishKukreti2003)
