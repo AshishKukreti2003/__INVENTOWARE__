@@ -178,7 +178,7 @@ public:
         file.close();
     }
 
-    // Bubble Sort algorithm to sort products by ID
+    // Insertion Sort algorithm to sort products by ID
     void sortProductsByID()
     {
         int n = products.size();
